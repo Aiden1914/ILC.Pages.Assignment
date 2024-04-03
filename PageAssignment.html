@@ -3,11 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+	<script src="/js/my.js"></script>
+
     <title>Assignment</title>
+
+	<style>
+		table {
+		  font-family: arial, sans-serif;
+		  border-collapse: collapse;
+		  width: 100%;
+		}
+		
+		td, th {
+		  border: 1px solid #dddddd;
+		  text-align: left;
+		  padding: 8px;
+		}
+		
+		tr:nth-child(even) {
+		  background-color: #dddddd;
+		}
+	</style>
+
 </head>
+
 <body>
     <div id="results"></div>
 </body>
+
 <script id="data" type="application/json">
 	[
 		{
@@ -487,6 +511,48 @@
 			"so_totalprice": 1383.910000000,
 			"so_totaltax": 0.000000000
 		}
-	]    
+	]   
+
+
 </script>
+
+<table>
+	<thead>
+		<tr>
+			<th>Sales Order Number</th>
+			<th>Sales Order Date</th>
+			<th>Reciever Name</th>
+			<th>Sales Order Tax Rate</th>
+			<th>Sales Order Total Price</th>
+			<th>Sales Order Total Tax</th>
+		  </tr>
+	</thead>
+	<tbody id="table-body">
+
+	</tbody>	
+</table> 
+
+<script type="text/javascript">
+	const jsonArrayElements = document.getElementById("data");
+
+	const jsonData = JSON.parse(jsonArrayElements.textContent);
+
+	console.log(jsonData);
+
+	for (var i in jsonData)
+	{
+		var row = '<tr>' +
+                      '<td>' + jsonData[i].so_num + '</td>' +
+                      '<td>' + jsonData[i].so_datecreated + '</td>' +
+                      '<td>' + jsonData[i].shipto_name + '</td>' +
+                      '<td>' + jsonData[i].so_taxrate.toFixed(2) / 100 + "%" + '</td>' +
+                      '<td>' + "$" + jsonData[i].so_totalprice + '</td>' +
+                      '<td>' + "$" + jsonData[i].so_totaltax + '</td>' +
+                  '</tr>';
+
+		var table = $('#table-body')
+		table.append(row);
+	}
+</script>
+
 </html>
